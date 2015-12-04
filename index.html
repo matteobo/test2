@@ -1,0 +1,117 @@
+<!doctype html>
+	<head>
+		<title>MAXO Contest</title>
+		<script src='globaldata.js'></script>
+		<link href="style.css" rel="stylesheet" type="text/css">
+		<script src="phonegap.js"></script>
+	</head>
+	<body>
+		<!- TITLE ->
+		<h2 class="title">SISTEMI DI SUPPORTO ALLE DECISIONI</h2>
+		<h1 class="title green">MAXO</h1>
+		
+		<div class="emptySpace"> </div>
+
+		<!- BODY ->
+		<div class="row">
+			<!- COLUMN I : LOAD DATA->
+			<div class="col colI">
+				<div class="emptySpace170"> </div>
+				<input id="fileName" type="text" value="Insert FILENAME.JSON" />
+
+				<div class="emptySpace"> </div>
+				<button class="loadData" onclick="loadData()">Load</button>
+			</div>
+			<!- COLUMN II : SELECT ALGORITHM->
+			<div class="col colII">
+				<div class="emptySpace"> </div>
+				<input id="maxTime" type="text" value="Insert MAX TIME" />
+				<input id="maxIter" type="text" value="Insert MAX ITERATION" />
+				<input id="k" type="text" value="Insert K value" />
+
+				<div class="emptySpace"> </div>
+				<button class="algorithm" onclick="calcSol()">Costruttiva</button>
+				<button class="algorithm" onclick="optSol10()">Optimize 1 0</button>
+				<button class="algorithm" onclick="optSol11()">Optimize 1 1</button>
+				<button class="algorithm" onclick="simAnn()">Sim. Annealing</button>
+				<button class="algorithm" onclick="tabuSearch()">Tab&ugrave; Search</button>
+				<button class="algorithm" onclick="ils()">ILS</button>
+				<button class="algorithm" onclick="grasp()">GRASP</button>
+				<button class="algorithm" onclick="vns()">VNS</button>
+			</div>
+			<!- COLUMN III : SHOW RESULT->
+			<div class="col colIII">
+				<div class="emptySpace"> </div>
+				<h3 id="titleRes">Result</h3>
+				<p id="valueRes"></p>
+			</div>
+		</div>
+	</body>
+	<script application:javascripttype>
+	"use strict"; //regole restrittive sull'interpretazione del codice, ad aesempio le variabili
+
+	function loadData(){
+		var fileName = document.getElementById("fileName").value ;
+
+		readWithCORS(fileName);
+
+		//output.innerHTML = cap;
+	}
+
+	function calcSol(){
+		
+		solveCostruttiva();
+	}
+
+	function optSol10(){
+		
+		optimizeSolution10(c);
+	}
+
+	function optSol11(){
+		
+		optimizeSolution11(c);
+	}
+
+	function simAnn(){
+		
+		optimizeSolutionSimAnnealing();
+	}
+
+	function tabuSearch(){
+		
+		optimizeSolutiontabuSearch();
+	}
+
+	function ils(){
+		
+		optimizeIteratedLocalSearch();
+	}
+
+	function grasp(){
+
+		var maxIter = document.getElementById("maxIter").value ;
+		var maxTime = document.getElementById("maxTime").value ;
+		var k = document.getElementById("k").value ;
+		
+		optimizeGrasp(maxIter, maxTime, k);
+	}
+
+	function vns(){
+		
+		var maxIter = document.getElementById("maxIter").value ;
+		var maxTime = document.getElementById("maxTime").value ;
+		var k = document.getElementById("k").value ;
+		
+		optimizeVns(maxIter, maxTime, k);
+
+		var output = document.getElementById("valueRes");
+		output.innerHTML = "Best Solution: <br/> z: " + zub + " <br /> solution: " + JSON.stringify(solbest); 
+	}
+
+	
+	</script>
+	<script src='loadgap.js'></script>
+	<script src='algorithm.js'></script>
+
+</html>

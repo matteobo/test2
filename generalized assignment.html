@@ -1,0 +1,22 @@
+var data;
+
+function readWithCORS()
+{  
+   var req = new XMLHttpRequest();
+   if ('withCredentials' in req) 
+   {  req.open('GET', 'http://astarte.csr.unibo.it/gapdata/1.json', true);
+      req.onreadystatechange = function() 
+      {
+        if (req.readyState === 4) 
+            if (req.status >= 200 && req.status < 400) 
+            {  data = req.responseText;//JSON.parse(req.responseText);
+               alert("DATA="+data);
+            }
+            else 
+            {  // Handle error case
+               alert(req.status);
+            }
+       };
+      req.send();
+   }
+}
